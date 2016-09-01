@@ -1,0 +1,156 @@
+<!-- [ CONTACT PAGE ] -->
+<div id="contact" class="anim s01 pg-wrp">
+	<div class="container">
+		
+		<!-- [ TITLE ] -->
+		<section class="title-wrapper anim fadeInUp s01 delay-0-5s">
+			<h1 class="h1 title">Nous contacter</h1>
+			<span class="line"></span>
+			<p>
+				Vous avez des questions, des suggestions ?<br>Cette section est faite pour vous ! L'équipe vous remercie de votre confiance.
+			</p>
+		</section>
+
+		<!-- [ CONTACT-BOX WRAPPER ] -->
+		<div class="row contact-box-wrp">
+
+			<!-- CONTACT-BOX -->
+			<div class="col-md-4 col-sm-4 anim fadeInUp s01 delay-0-6s">
+				<div class="contact-box">
+					<div class="icon vhm">
+						<span class="box"></span>
+						<i class="fa fa-phone vhm-item"></i>
+					</div>
+					<div class="text vm">
+						<p class="vm-item">04 76 46 92 67<br>06 61 66 44 39</p>		
+					</div>		
+				</div>	
+			</div>
+
+			<!-- CONTACT-BOX -->
+			<div class="col-md-4 col-sm-4 anim fadeInUp s01 delay-0-7s">
+				<div class="contact-box">
+					<div class="icon vhm">
+						<span class="box"></span>
+						<i class="fa fa-envelope vhm-item"></i>
+					</div>
+					<div class="text vm">
+						<a class="vm-item" href="#">ghislaine@laboratoire-gutierrez.com</a>	
+					</div>		
+				</div>	
+			</div>
+
+			<!-- CONTACT-BOX -->
+			<div class="col-md-4 col-sm-4 anim fadeInUp s01 delay-0-8s">
+				<div class="contact-box">
+					<div class="icon vhm">
+						<span class="box"></span>
+						<i class="fa fa-flag vhm-item"></i>
+					</div>
+					<div class="text vm">
+						<a class="vm-item" href="#">4 rue Nestor Cornier,<br>
+						 38100 Grenoble</a>
+					</div>		
+				</div>	
+			</div>
+
+		</div>
+		<!-- [ CONTACT-BOX WRAPPER END ] -->
+
+		<!-- [ CONTACT US FORM ] -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="disable cnt-rmsg"><p id="returnmessage"></p></div>
+				<form id="cntForm" class="contact-form mb40" action="contact-me.php" method="post" accept-charset="utf-8">
+					<div class="row">
+
+						<div class="col-md-6 col-sm-6 anim fadeInUp s01 delay-0-9s">
+							<div class="input-area">
+								<input  type="text" id="name" name="name" class="form-control" placeholder="Nom">
+							</div>
+						</div>
+
+						<div class="col-md-6 col-sm-6 anim fadeInUp s01 delay-1s">
+							<div class="input-area">
+								<input  type="email" id="email" name="email" class="form-control" placeholder="Email">
+							</div>
+						</div>
+		
+						<div class="col-md-12 col-sm-12 anim fadeInUp s01 delay-1-2s">
+							<div class="input-area">
+								<textarea  class="form-control" id="message" name="message" rows="3" placeholder="Message"></textarea>
+							</div>
+						</div>
+
+						<div class="col-md-12 col-sm-12 align-right anim fadeInUp s01 delay-1-3s">
+							<div class="button-wrp">
+								<button type="submit" class="btn btn-color" id="submit-1">Envoyer</button>
+							</div>
+						</div>
+
+					</div>
+				</form>
+			</div>
+		</div>
+		<!-- [ CONTACT US FORM END ] -->
+
+
+	</div>
+</div>
+<!-- [ CONTACT PAGE END ] -->	
+
+<script>
+if (window.$) {
+	(function($) {
+		"use strict";
+
+		$('#cntForm').submit(function () {
+		    $('#cntForm .error-form').remove();
+		    $('#cntForm .success').remove();
+		    var hasError = false;
+		    $('#cntForm .form-control').each(function () {
+		        if (jQuery.trim($(this).val()) === '') {
+		        	$(this).addClass('error-box');
+		            $(this).parent().append('<span class="error-form animated flash"><i class="fa fa-exclamation-triangle"></i></span>');
+		            hasError = true;
+		        } else if ($(this).hasClass('email')) {
+		            var emailReg = /^([\w-\.]+@([\w]+\.)+[\w]{2,4})?$/;
+		            if (!emailReg.test(jQuery.trim($(this).val()))) {
+		            	$(this).addClass('error-box');
+		                $(this).parent().append('<span class="error-form animated flash"><i class="fa fa-exclamation-triangle"></i></span>');
+		                hasError = true;
+		            }
+		        }
+		    });
+		    if (!hasError) {
+		        var formInput = $(this).serialize();
+		        $.post($(this).attr('action'), formInput, function (data) {
+		        	$("#cntForm input, #cntForm textarea, #cntForm button").attr("disabled", "disabled");
+		        	$(".disable").fadeIn('200');
+		        	$('#returnmessage').css("opacity", 1);
+		        	$('#returnmessage').fadeIn('300');
+		            $('#returnmessage').text('Votre message a bien été envoyé, nous y répondrons dès que possible !');
+		            $('#returnmessage').fadeOut(6000);
+		            $('#returnmessage').css("opacity", 0);
+		            $(".disable").delay(1000).fadeOut(1500, function () {
+		            	$("#cntForm input, #cntForm textarea, #cntForm button").removeAttr("disabled");
+		            });
+		        });
+		        $('.form-control').val('');
+		    }
+		    return false;
+		});
+		$('#cntForm .form-control').focus(function () {
+			$('#cntForm .form-control').removeClass('error-box');
+		    $('#cntForm .error-form').remove();
+		    $('#cntForm .success').remove();
+		});
+		$('#cntForm textarea').focus(function () {
+			$('#cntForm .form-control').removeClass('error-box');
+		    $('#cntForm .error-form').remove();
+		    $('#cntForm .success').remove();
+		});
+
+	})(jQuery);
+}
+</script>	
