@@ -79,14 +79,15 @@ if (isset($_POST['email']))
     $password = md5(str_shuffle($char));
     $last_name = $_POST['last_name'];
     $first_name = $_POST['first_name'];
+    $title = $_POST['title'];
 
 // on fait l'INSERT dans la base de données
-    if ($add_user =  $dbprotect->query("INSERT INTO MEMBER (email, password, last_name, first_name) VALUES ('$email', '$password', '$last_name', '$first_name')"))
+    if ($add_user =  $dbprotect->query("INSERT INTO MEMBER (email, password, title, last_name, first_name) VALUES ('$email', '$password', '$title', '$last_name', '$first_name')"))
     {
     	
     	?><p>L'opération s'est bien déroulée, le membre <?php echo $add_user ?> a été créé et le mot de passe généré est<?php echo $password ?></p>
     	<?php
-    	if (!SendMailToNewMember($dbprotect, $email,$first_name." ".$last_name))
+    	if (!SendMailToNewMember($dbprotect, $email,$title." ".$first_name." ".$last_name))
     	{
     		?><p>Une erreur s'est produite lors de l'envoi du mail de notification à <?php echo $email ?></p>
     		<?php
@@ -125,6 +126,18 @@ else if (isset($_POST['idmember']))
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
         <input type="text" class="form-control" name="email" id="email" placeholder="Adresse email">
       </div>
+
+       <div class="input-group input-group-lg">
+        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <select class="form-control" name="title" id="title">
+        	<option value="Dr.">Docteur</option>
+        	<option value="Mr.">Monsieur</option>
+        	<option value="Mme.">Madame</option>
+        	<option value="Mlle.">Mademoiselle</option>
+        	<option value="" selected>Aucun</option>
+        </select>
+      </div>
+
 
       <div class="input-group input-group-lg">
         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
