@@ -87,7 +87,7 @@ if (isset($_POST['email']))
     	
     	?><p>L'opération s'est bien déroulée, le membre <?php echo $add_user ?> a été créé et le mot de passe généré est<?php echo $password ?></p>
     	<?php
-    	if (!SendMailToNewMember($dbprotect, $email,$title." ".$first_name." ".$last_name))
+    	if (!SendMailToNewMember($dbprotect, $email, trim($title." ".$first_name." ".$last_name)))
     	{
     		?><p>Une erreur s'est produite lors de l'envoi du mail de notification à <?php echo $email ?></p>
     		<?php
@@ -130,11 +130,11 @@ else if (isset($_POST['idmember']))
        <div class="input-group input-group-lg">
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
         <select class="form-control" name="title" id="title">
+        	<option value="" selected>Aucun</option>
         	<option value="Dr.">Docteur</option>
         	<option value="Mr.">Monsieur</option>
         	<option value="Mme.">Madame</option>
         	<option value="Mlle.">Mademoiselle</option>
-        	<option value="" selected>Aucun</option>
         </select>
       </div>
 
