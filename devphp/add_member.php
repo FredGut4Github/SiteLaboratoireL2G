@@ -26,7 +26,7 @@ $result = $dbprotect->query("SELECT * FROM MEMBER");
 
 <table>
   <tr>
-    <th>ID</th><th>Prénom</th><th>Nom</th><th>Email</th><th>URL Part</th><th>ValidityDate</th><th>Supprimer</th>
+    <th>ID</th><th>Préfixe</th><th>Prénom</th><th>Nom</th><th>Email</th><th>URL Part</th><th>ValidityDate</th><th>Supprimer</th>
   </tr>
 
 <?php
@@ -50,7 +50,7 @@ while ($line_result = $result->fetch_assoc())
 	?>
 
 	<tr>
-	<td><?php echo $line_result['id_member'] ?></td><td><?php echo $line_result['first_name'] ?></td><td><?php echo $line_result['last_name'] ?></td><td><?php echo $line_result['email'] ?></td>
+	<td><?php echo $line_result['id_member'] ?></td><td><?php echo $line_result['title'] ?><td><?php echo $line_result['first_name'] ?></td><td><?php echo $line_result['last_name'] ?></td><td><?php echo $line_result['email'] ?></td>
   <td><?php echo $link_result_id_link ?></td><td><?php echo $str_link_result_validity_date ?></td>
 	<td>
 		<form action="" method="post" name="deletemember">
@@ -79,14 +79,15 @@ if (isset($_POST['email']))
     $password = md5(str_shuffle($char));
     $last_name = $_POST['last_name'];
     $first_name = $_POST['first_name'];
+    $title = $_POST['title'];
 
 // on fait l'INSERT dans la base de données
-    if ($add_user =  $dbprotect->query("INSERT INTO MEMBER (email, password, last_name, first_name) VALUES ('$email', '$password', '$last_name', '$first_name')"))
+    if ($add_user =  $dbprotect->query("INSERT INTO MEMBER (email, password, title, last_name, first_name) VALUES ('$email', '$password', '$title', '$last_name', '$first_name')"))
     {
     	
     	?><p>L'opération s'est bien déroulée, le membre <?php echo $add_user ?> a été créé et le mot de passe généré est<?php echo $password ?></p>
     	<?php
-    	if (!SendMailToNewMember($dbprotect, $email,$first_name." ".$last_name))
+    	if (!SendMailToNewMember($dbprotect, $email,$title." ".$first_name." ".$last_name))
     	{
     		?><p>Une erreur s'est produite lors de l'envoi du mail de notification à <?php echo $email ?></p>
     		<?php
@@ -125,6 +126,18 @@ else if (isset($_POST['idmember']))
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
         <input type="text" class="form-control" name="email" id="email" placeholder="Adresse email">
       </div>
+
+       <div class="input-group input-group-lg">
+        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <select class="form-control" name="title" id="title">
+        	<option value="Dr.">Docteur</option>
+        	<option value="Mr.">Monsieur</option>
+        	<option value="Mme.">Madame</option>
+        	<option value="Mlle.">Mademoiselle</option>
+        	<option value="" selected>Aucun</option>
+        </select>
+      </div>
+
 
       <div class="input-group input-group-lg">
         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
