@@ -26,7 +26,7 @@ $result = $dbprotect->query("SELECT * FROM MEMBER");
 
 <table>
   <tr>
-    <th>ID</th><th>Prénom</th><th>Nom</th><th>Email</th><th>URL Part</th><th>ValidityDate</th><th>Supprimer</th>
+    <th>ID</th><th>Préfixe</th><th>Prénom</th><th>Nom</th><th>Email</th><th>URL Part</th><th>ValidityDate</th><th>Supprimer</th>
   </tr>
 
 <?php
@@ -50,7 +50,7 @@ while ($line_result = $result->fetch_assoc())
 	?>
 
 	<tr>
-	<td><?php echo $line_result['id_member'] ?></td><td><?php echo $line_result['first_name'] ?></td><td><?php echo $line_result['last_name'] ?></td><td><?php echo $line_result['email'] ?></td>
+	<td><?php echo $line_result['id_member'] ?></td><td><?php echo $line_result['title'] ?><td><?php echo $line_result['first_name'] ?></td><td><?php echo $line_result['last_name'] ?></td><td><?php echo $line_result['email'] ?></td>
   <td><?php echo $link_result_id_link ?></td><td><?php echo $str_link_result_validity_date ?></td>
 	<td>
 		<form action="" method="post" name="deletemember">
