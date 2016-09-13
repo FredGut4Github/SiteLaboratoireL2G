@@ -1,4 +1,4 @@
-<?php require_once('../../lib/globals.php'); ?>
+<?php require_once('../lib/globals.php'); ?>
 <?php 
 session_start(); // Début de session
 

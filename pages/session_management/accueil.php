@@ -4,8 +4,8 @@
 
 session_start(); // On relaye la session
 if (isset($_SESSION['email'])) 
-{ // vérification sur la session authentification (la session est elle enregistrée ?)
-// ici les éventuelles actions en cas de réussite de la connexion
+{ // vÃ©rification sur la session authentification (la session est elle enregistrÃ©e ?)
+// ici les Ã©ventuelles actions en cas de rÃ©ussite de la connexion
 }
 else 
 {
@@ -22,9 +22,9 @@ header("Location:$HTTP_URL"); // redirection en cas d'echec
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="Spécialisé dans la prothèse complète amovible, le laboratoire Gutierrez a plus de 50 ans d'expérience. Il est situé sur Grenoble et livre dans toute la région.">
-  <meta name="keywords" content="laboratoire, gutierrez, prothésiste, dentaire, dents, prothèses, dentier, amovible, complète, grenoble, isère, ghislaine, robert, spécialiste, spécialisé, laboratoire gutierrez,
-    équipe, contact, informations">
+  <meta name="description" content="SpÃ©cialisÃ© dans la prothÃ¨se complÃ¨te amovible, le laboratoire Gutierrez a plus de 50 ans d'expÃ©rience. Il est situÃ© sur Grenoble et livre dans toute la rÃ©gion.">
+  <meta name="keywords" content="laboratoire, gutierrez, prothÃ©siste, dentaire, dents, prothÃ¨ses, dentier, amovible, complÃ¨te, grenoble, isÃ¨re, ghislaine, robert, spÃ©cialiste, spÃ©cialisÃ©, laboratoire gutierrez,
+    Ã©quipe, contact, informations">
   <meta name="author" content="Pug-IT France">
 
   <title>Laboratoire Gutierrez</title>
@@ -94,7 +94,7 @@ header("Location:$HTTP_URL"); // redirection en cas d'echec
 									<input type="text" class="form-control" name="email" placeholder="Email">
 									<button type="submit" id="submit" class="icon vhm"><i class="fa fa-envelope-o vhm-item"></i></button>
 								</form>
-								<p>Recevez notre actualité<br>en saisissant votre email ci-dessus.</p>
+								<p>Recevez notre actualitÃ©<br>en saisissant votre email ci-dessus.</p>
 							</div>
 
 							<!-- [ SUBSCRIBE END ] -->
@@ -143,11 +143,11 @@ header("Location:$HTTP_URL"); // redirection en cas d'echec
 							      <h1 class="h1 title">Bienvenue dans votre espace !</h1>
 							      <span class="line"></span>
 							      <p>
-							        Vous êtes connecté en tant que : <?php echo $_SESSION['email']; ?>.<br>
-									Votre mot de passe est : <?php echo $_SESSION['password']; ?>> (chiffré par MD5 : ne peut donc être vivible en clair).<br>
+							        Vous Ãªtes connectÃ© en tant que : <?php echo $_SESSION['email']; ?>.<br>
+									Votre mot de passe est : <?php echo $_SESSION['password']; ?>> (chiffrÃ© par MD5 : ne peut donc Ã©tre vivible en clair).<br>
 									</p>
 
-									<p align="center"><a style="color:#9EBF85" href="../../pages/session_management/logout.php"><strong>Vous déconnecter</strong></a></p>
+									<p align="center"><a style="color:#9EBF85" href="../../pages/session_management/logout.php"><strong>Vous dÃ©connecter</strong></a></p>
 							    </section>
 
 
