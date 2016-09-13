@@ -1,56 +1,58 @@
-<?php require_once('lib_mail.php');?>
 <?php require_once('globals.php');?>
+<?php require_once('lib_message_log.php');?>
+<?php require_once('lib_mail.php');?>
 <?php
 
-function GenerateHyperLinkResetPassword($dbconnexion, $emailmember)
+function GenerateHyperLinkResetPassword($dbconnection, $emailmember)
 {
+  global $MSG_MODULE_DATABASE;
   global $HTTP_URL;
   $char = 'abcdefghijklmnopqrstuvwxyz0123456789';
   $urlpart = str_shuffle($char);
-  if (($result = $dbconnexion->query("SELECT id_member FROM MEMBER WHERE email ='$emailmember'")) && ($result->num_rows > 0))
+  if (($result = $dbconnection->query("SELECT id_member FROM MEMBER WHERE email ='$emailmember'")) && ($result->num_rows > 0))
   {
     $line_result = $result->fetch_assoc();
     $id_mbr = $line_result['id_member'];
-    if (($link_result = $dbconnexion->query("SELECT * FROM LINK WHERE id_member ='$id_mbr'")) && ($link_result->num_rows > 0))
+    $now = getdate();
+    $validity_date = $now[0] + (3600*24);
+    $str_validity_date = $now['year']."/".$now['mon']."/".$now['mday']." ".$now['hours'].":".$now['minutes'];
+    if (($link_result = $dbconnection->query("SELECT * FROM LINK WHERE id_member ='$id_mbr'")) && ($link_result->num_rows > 0))
     {
       $line_result = $link_result->fetch_assoc();
       $urlpart = $line_result['id_link'];
-      $now = getdate();
-      $validity_date = $now[0] + (3600*24);
-      if (!($link_creation = $dbconnexion->query("UPDATE LINK SET validity_date = '$validity_date' WHERE id_member ='$id_mbr'")))
+      if (!($link_creation = $dbconnection->query("UPDATE LINK SET validity_date = '$validity_date' WHERE id_member ='$id_mbr'")))
       {
         //Impossible de créer l'entrée, ce qui ne devrait pas arriver
+        LogFatalMessage($dbconnection,$MSG_MODULE_DATABASE,"Update LINK error","UPDATE SQL Query failed :\nUPDATE LINK SET validity_date = ".$validity_date." WHERE id_member = ".$id_mbr);
         return $HTTP_URL."pages/session_management/reset_password.php?arg=1";
       }
+      LogInfoMessage($dbconnection,$MSG_MODULE_DATABASE,"Member link updated","The link validity date for the member ".$id_mbr." is updated: ".$str_validity_date);
     }
     else
     {
-      while (($link_result = $dbconnexion->query("SELECT * FROM LINK WHERE id_link ='$urlpart'")) && ($link_result->num_rows > 0))
+      while (($link_result = $dbconnection->query("SELECT * FROM LINK WHERE id_link ='$urlpart'")) && ($link_result->num_rows > 0))
       {
         $urlpart = str_shuffle($char);
       }
-      $now = getdate();
-      $validity_date = $now[0] + (24*3600);
-
-      if (!($link_creation = $dbconnexion->query("INSERT INTO LINK (id_link, id_member, validity_date) VALUES ('$urlpart', '$id_mbr', '$validity_date')")))
+      if (!($link_creation = $dbconnection->query("INSERT INTO LINK (id_link, id_member, validity_date) VALUES ('$urlpart', '$id_mbr', '$validity_date')")))
       {
         //Impossible de créer l'entrée, ce qui ne devrait pas arriver
+        LogFatalMessage($dbconnection,$MSG_MODULE_DATABASE,"Insert LINK error","INSERT SQL Query failed :\nINSERT INTO LINK (id_link, id_member, validity_date) VALUES (".$urlpart.", ".$id_mbr.", ".$validity_date.")");
         return  $HTTP_URL."pages/session_management/reset_password.php?arg=2";
       }
+      LogInfoMessage($dbconnection,$MSG_MODULE_DATABASE,"Member link created","A new link for the member ".$id_mbr." is created: validity date = ".$str_validity_date);
     }
   }
   else
   { // Cas où le membre avec le mail $emailmember n'existe pas
     // Ne devrait pas arriver
+    LogFatalMessage($dbconnection,$MSG_MODULE_DATABASE,"Select LINK error","SELECT SQL Query failed :\nSELECT * FROM LINK WHERE id_member =".$id_mbr);
     return  $HTTP_URL."pages/session_management/reset_password.php?arg=3";
   }
   return  $HTTP_URL."pages/session_management/reset_password.php?id=".$urlpart;
 }
 
-
-
-
-function SendMailToNewMember($dbconnexion, $sendtoemail, $sendtoname)
+function SendMailToNewMember($dbconnection, $sendtoemail, $sendtoname)
 {
      // Sujet
      $subject = "Vos informations d'identification";
@@ -82,7 +84,7 @@ function SendMailToNewMember($dbconnexion, $sendtoemail, $sendtoname)
                                                 <td align="center" style="padding-top: 25px;" class="padding">
                                                     <table border="0" cellspacing="0" cellpadding="0" class="mobile-button-container">
                                                         <tr>
-                                                            <td align="center" style="border-radius: 3px;" bgcolor="#256F9C"><a href="'. GenerateHyperLinkResetPassword($dbconnexion, $sendtoemail) .'" target="_blank" style="font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; border-radius: 3px; padding: 15px 25px; border: 1px solid #256F9C; display: inline-block;" class="mobile-button">C\'est parti &rarr;</a></td>
+                                                            <td align="center" style="border-radius: 3px;" bgcolor="#256F9C"><a href="'. GenerateHyperLinkResetPassword($dbconnection, $sendtoemail) .'" target="_blank" style="font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; border-radius: 3px; padding: 15px 25px; border: 1px solid #256F9C; display: inline-block;" class="mobile-button">C\'est parti &rarr;</a></td>
                                                         </tr>
                                                     </table>
                                                 </td>
@@ -119,11 +121,7 @@ function SendMailToNewMember($dbconnexion, $sendtoemail, $sendtoname)
      return mail($sendtoemail, $subject, $message, $headers);
 }
 
-        
-        
-        
-
-function SendMailToResetPassword($dbconnexion, $sendtoemail, $sendtoname)
+function SendMailToResetPassword($dbconnection, $sendtoemail, $sendtoname)
 {
      // Sujet
      $subject = 'Réinitialisation de mot de passe';
@@ -155,7 +153,7 @@ function SendMailToResetPassword($dbconnexion, $sendtoemail, $sendtoname)
                                                 <td align="center" style="padding-top: 25px;" class="padding">
                                                     <table border="0" cellspacing="0" cellpadding="0" class="mobile-button-container">
                                                         <tr>
-                                                            <td align="center" style="border-radius: 3px;" bgcolor="#256F9C"><a href="'. GenerateHyperLinkResetPassword($dbconnexion, $sendtoemail) .'" target="_blank" style="font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; border-radius: 3px; padding: 15px 25px; border: 1px solid #256F9C; display: inline-block;" class="mobile-button">C\'est parti &rarr;</a></td>
+                                                            <td align="center" style="border-radius: 3px;" bgcolor="#256F9C"><a href="'. GenerateHyperLinkResetPassword($dbconnection, $sendtoemail) .'" target="_blank" style="font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; border-radius: 3px; padding: 15px 25px; border: 1px solid #256F9C; display: inline-block;" class="mobile-button">C\'est parti &rarr;</a></td>
                                                         </tr>
                                                     </table>
                                                 </td>
@@ -191,20 +189,15 @@ function SendMailToResetPassword($dbconnexion, $sendtoemail, $sendtoname)
      return mail($sendtoemail, $subject, $message, $headers);
 }
 
-        
-
-
-
-function DeleteMember($dbconnexion, $idmember)
+function DeleteMember($dbconnection, $idmember)
 {
-  if ($dbconnexion->query("DELETE FROM MEMBER WHERE id_member = '$idmember'"))
-  {
-    return true;
-  }
-  return false;
+	if ($dbconnection->query("DELETE FROM MEMBER WHERE id_member = '$idmember'"))
+	{
+		LogInfoMessage($dbconnection,$MSG_MODULE_DATABASE,"Member deleted","The member ".$idmember." is deleted.");
+		return true;
+	}
+	LogCriticalMessage($dbconnection,$MSG_MODULE_DATABASE,"Member not deleted","The member ".$idmember." was not deleted.");
+	return false;
 }
-
-
-
 
 ?>
