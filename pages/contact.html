@@ -66,19 +66,30 @@
 
 						<div class="col-md-6 col-sm-6 anim fadeInUp s01 delay-0-9s">
 							<div class="input-area">
-								<input  type="text" id="name" name="name" class="form-control" placeholder="Nom">
+								<input  type="text" id="name" name="name" class="form-control" placeholder="Nom" required>
 							</div>
 						</div>
 
 						<div class="col-md-6 col-sm-6 anim fadeInUp s01 delay-1s">
 							<div class="input-area">
-								<input  type="email" id="email" name="email" class="form-control" placeholder="Email">
+								<input  type="email" id="email" name="email" class="form-control" placeholder="Email" required>
+							</div>
+						</div>
+
+						<div class="col-md-12 col-sm-12 anim fadeInUp s01 delay-1-2s">
+							<div class="input-area">
+								<select  class="form-control" id="subject" name="subject" required> <!-- placeholder="Sujet" -->
+									<option style="color:#313A1A;" value="" selected>Sujet</option>
+						        	<option style="color:#313A1A;" value="suggestion">J'ai une suggestion</option>
+						        	<option style="color:#313A1A;" value="devis">Faire un devis ?</option>
+						        	<option style="color:#313A1A;" value="autre">Autre ...</option>
+								</select>
 							</div>
 						</div>
 		
 						<div class="col-md-12 col-sm-12 anim fadeInUp s01 delay-1-2s">
 							<div class="input-area">
-								<textarea  class="form-control" id="message" name="message" rows="3" placeholder="Message"></textarea>
+								<textarea  class="form-control" id="message" name="message" rows="3" placeholder="Message" required></textarea>
 							</div>
 						</div>
 
