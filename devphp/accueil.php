@@ -2,13 +2,16 @@
 <?php
 
 session_start(); // On relaye la session
-if (isset($_SESSION['authentification'])){ // vérification sur la session authentification (la session est elle enregistrée ?)
-// ici les éventuelles actions en cas de réussite de la connexion
+
+if (isset($_SESSION['authentification'])){ // vÃ©rification sur la session authentification (la session est elle enregistrÃ©e ?)
+	// ici les Ã©ventuelles actions en cas de rÃ©ussite de la connexion
 }
 else {
-header("Location:index.php?error=intru"); // redirection en cas d'echec
+	header("Location:index.php?error=intru"); // redirection en cas d'echec
 }
+
 ?>
+
 <html>
 <head>
 <title>ESPACE PRIVE</title>
@@ -16,13 +19,12 @@ header("Location:index.php?error=intru"); // redirection en cas d'echec
 <link href="login-form.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<p align="center" class="titre"><strong>- : : : VOTRE ESPACE PRIVE : : : -</strong></p>
-<p>Bienvenue dans votre espace sécurisé. <br>
-Vous êtes connecté en tant que &quot;<span class="donnee"><?php echo $_SESSION['email']; ?></span>&quot;.<br>
-Votre mot de passe est &quot;<span class="donnee"><?php echo $_SESSION['password']; ?></span>&quot; (chiffré par MD5 &gt; ne peut donc être vivible en clair).</p>
+	<p align="center" class="titre"><strong>- : : : VOTRE ESPACE PRIVE : : : -</strong></p>
 
+	<p>Bienvenue dans votre espace sÃ©curisÃ©. <br>
+Vous Ãªtes connectÃ© en tant que &quot;<span class="donnee"><?php echo $_SESSION['email']; ?></span>&quot;.<br>
+Votre mot de passe est &quot;<span class="donnee"><?php echo $_SESSION['password']; ?></span>&quot; (chiffrÃ© par MD5 &gt; ne peut donc Ãªtre vivible en clair).</p>
 
-
-<p align="center"><a href="index.php?error=logout"><strong>Vous déconnecter</strong></a></p>
+	<p align="center"><a href="index.php?error=logout"><strong>Vous dÃ©connecter</strong></a></p>
 </body>
 </html>
