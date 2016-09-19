@@ -2,10 +2,10 @@
 <?php
 
 // Paramêtres de connexion
-$hostname_dbprotect = "localhost"; // nom ou ip de votre serveur
-$database_dbprotect = "u865896097_labog"; // nom de votre base de données
-$username_dbprotect = "u865896097_yann"; // nom d'utilisateur (root par défaut) !!! ATTENTION, en utilisant root, vos visiteurs on tous les droits sur la base
-$password_dbprotect = "WebSyde1313"; // mot de passe (aucun par défaut mais il est fortement recommandé d'en mettre un ... sinon à quoi bon la sécurité ?)
+$hostname_dbprotect = "127.0.0.1";			// nom ou ip de votre serveur
+$database_dbprotect = "u865896097_labog";	// nom de votre base de données
+$username_dbprotect = "u865896097_yann";	// nom d'utilisateur (root par défaut) !!! ATTENTION, en utilisant root, vos visiteurs on tous les droits sur la base
+$password_dbprotect = "WebSyde1313";		// mot de passe (aucun par défaut mais il est fortement recommandé d'en mettre un ... sinon à quoi bon la sécurité ?)
 
 $dbprotect = new mysqli($hostname_dbprotect, $username_dbprotect, $password_dbprotect, $database_dbprotect);
 
