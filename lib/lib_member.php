@@ -193,10 +193,20 @@ function DeleteMember($dbconnection, $idmember)
 {
 	if ($dbconnection->query("DELETE FROM MEMBER WHERE id_member = '$idmember'"))
 	{
-		LogInfoMessage($dbconnection,$MSG_MODULE_DATABASE,"Member deleted","The member ".$idmember." is deleted.");
+		LogInfoMessage($dbconnection,$MSG_MODULE_MEMBER,"Member deleted","The member ".$idmember." is deleted.");
 		return true;
 	}
-	LogCriticalMessage($dbconnection,$MSG_MODULE_DATABASE,"Member not deleted","The member ".$idmember." was not deleted.");
+    LogFatalMessage($dbprotect,$MSG_MODULE_DATABASE,"Delete MEMBER error","DELETE FROM MEMBER WHERE id_member = ".$idmember);
+	return false;
+}
+
+
+function MemberExists($dbconnection, $idmember)
+{
+	if (($result = $dbconnection->query("SELECT * FROM MEMBER WHERE id_member = '$idmember'")) && ($result->num_rows > 0))
+	{
+		return true;
+	}
 	return false;
 }
 

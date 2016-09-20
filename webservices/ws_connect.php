@@ -1,77 +1,57 @@
 <?php require_once('../lib/globals.php');?>
 <?php require_once('../lib/connexion.php');?>
-<?php require_once('../lib/JWT.php');?>
+<?php require_once('../lib/lib_message_log.php');?>
+<?php require_once('../lib/lib_ws.php');?>
 <?php
+
+$GROUPS_ALLOWDED = ['Directors','Dentists','Employees','Dentists','Patient','DeliveryMen','Suppliers','Partners'];
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-function RenewJSONWebToken($id,$delay,$livetime)
-{
-	$tokenId    = base64_encode(mcrypt_create_iv(32));
-	$issuedAt   = time();
-	$notBefore  = $issuedAt + $delay;  //Adding 10 seconds
-	$expire     = $notBefore + $livetime; // Adding 60 seconds
-	$serverName = 'http://www.laboratoire-gutierrez.com/webservices/'; /// set your domain name 
-	 
-	/*
-	 * Create the token as an array
-	 */
-	$data = [
-	         'iat'  => $issuedAt,         // Issued at: time when the token was generated
-	         'jti'  => $tokenId,          // Json Token Id: an unique identifier for the token
-	         'iss'  => $serverName,       // Issuer
-	         'nbf'  => $notBefore,        // Not before
-	         'exp'  => $expire,           // Expire
-	         'data' => [                  // Data related to the logged user you can set your required data
-	         			'id'   => $id, // id from the users table
-	                   ]
-	        ];
-	$secretKey = base64_decode("Welcome2WebServices4L2G");
-	
-	/// Here we will transform this array into JWT:
-	$jwt = JWT::encode( $data,     //Data to be encoded in the JWT
-						$secretKey // The signing key
-	                  ); 
-	
-	return $jwt;
+try {
+	// VALIDATE THE WEB SERVICE PARAMETERS
+	WSConnect::ValidateParameters();
+}
+catch (Exception $e)
+{	// 		Token not valid for many reason
+	// or	The member is not allowed to use this web service
+	// or	The POST parameters are not valid
+	exit;
 }
 
-if (isset($_POST['email']) && isset($_POST['password']))
+// HERE WE GO... EVERYTHING IS DOING WELL ;-)
+
+$email 		= addslashes($_POST['email']); 			// The member's email
+$password 	= addslashes(md5($_POST['password'])); 	// The member's password to check
+
+if ($result = $dbprotect->query("SELECT * FROM MEMBER WHERE email='$email' AND password='$password'"))
 {
-	$email 		= addslashes($_POST['email']); 			// The member's email
-	$password 	= addslashes(md5($_POST['password'])); 	// The member's password to check
-	
-	if ($result = $dbprotect->query("SELECT * FROM MEMBER WHERE email='$email' AND password='$password'"))
-	{
-		if ( $result->num_rows == 1 ) 
-		{	// We found only 1 member AND the password is OK
-			// Let's continue and deal with JSON Web Token
-			
-			// Retrieve member's data
-			$r = $result->fetch_assoc();
-			
-			// Create a new JWT and send it
-			$jwt = RenewJSONWebToken($r['id_member'],0,3600);
-			$unencodedArray = ["jwt" => $jwt];
-			echo json_encode($unencodedArray);
-		}
-		else 
-		{	// Wrong login OR password
-			// The user is not authorized to loggon 
-			http_response_code(401); // Unauthorized 
-		}
+	if ( $result->num_rows == 1 ) 
+	{	// We found only 1 member AND the password is OK
+		// Let's continue and deal with JSON Web Token
+		
+		// Retrieve member's data
+		$r = $result->fetch_assoc();
+		
+		// Create a new JWT and send it
+		$jwt = RenewJSONWebToken($r['id_member'],$r['id_profile'],0,3600);
+		$unencodedArray = ["jwt" => $jwt];
+		echo json_encode($unencodedArray);
+      	LogInfoMessage($dbprotect,$MSG_MODULE_MEMBER,"Member connected","Member ".$r['id_member'].": profile(".$r['id_profile'].")");
 	}
-	else
-	{	// The SQL query failed
-		// Technical problem
-		http_response_code(500); // Internal Server Error
+	else 
+	{	// Wrong login OR password
+		// The user is not authorized to loggon 
+		http_response_code(401); // Unauthorized 
+      	LogWarningMessage($dbprotect,$MSG_MODULE_MEMBER,"Member connection failed","Someone try to connect with email: ".$email);
 	}
 }
 else
-{	// Bad Web Service Usage
-	// No post argument
-	http_response_code(501); // Not Implemented
+{	// The SQL query failed
+	// Technical problem
+	http_response_code(500); // Internal Server Error
+    LogFatalMessage($dbconnection,$MSG_MODULE_DATABASE,"Select MEMBER error","SELECT SQL Query failed :\nSELECT * FROM MEMBER WHERE email =".$email);
 }
 
 ?>

@@ -73,12 +73,12 @@ session_start(); // Début de session
 	<h2>WEB Session</h2>
 <?php
 
-function RenewJSONWebToken($id)
+function RenewJSONWebToken($id,$profile)
 {
 	$tokenId    = base64_encode(mcrypt_create_iv(32));
 	$issuedAt   = time();
-	$notBefore  = $issuedAt + 10;  //Adding 10 seconds
-	$expire     = $notBefore + 60; // Adding 60 seconds
+	$notBefore  = $issuedAt + 0;  //Adding 0 seconds
+	$expire     = $notBefore + 3600; // Adding 3600 seconds
 	$serverName = 'http://localhost/php-json/'; /// set your domain name 
 	 
 	/*
@@ -91,7 +91,8 @@ function RenewJSONWebToken($id)
 	         'nbf'  => $notBefore,        // Not before
 	         'exp'  => $expire,           // Expire
 	         'data' => [                  // Data related to the logged user you can set your required data
-	         			'id'   => $id, // id from the users table
+	         			'id'		=> $id,			// id from the users table
+	         			'profile'	=> $profile,	//
 	                   ]
 	        ];
 	$secretKey = base64_decode("SECRETKEY");
@@ -117,7 +118,7 @@ else if (isset($_POST['onActionRenewToken']))
 {
 	if (isset($_SESSION['jwt']))
 	{
-		RenewJSONWebToken($_SESSION['id_member']);
+		RenewJSONWebToken($_SESSION['id_member'],$_SESSION['id_profile']);
 	}
 }
 else if (isset($_POST['onActionConnect']))
@@ -132,7 +133,7 @@ else if (isset($_POST['onActionConnect']))
 		{
 			$r = $result->fetch_assoc(); // On récupère la ligne en cours
 			 
-			RenewJSONWebToken($r['id_member']);
+			RenewJSONWebToken($r['id_member'],$r['id_profile']);
 
 			// Déclaration des variables de session
 			$_SESSION['id_member'] 	= $r['id_member']; 
@@ -140,6 +141,7 @@ else if (isset($_POST['onActionConnect']))
 			$_SESSION['title'] 		= $r['title'];
 			$_SESSION['first_name']	= $r['first_name'];
 			$_SESSION['last_name'] 	= $r['last_name'];
+			$_SESSION['id_profile']	= $r['id_profile'];
 		}
 		else 
 		{
