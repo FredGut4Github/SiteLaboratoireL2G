@@ -1,3 +1,8 @@
+<?php
+
+session_start();
+
+?>
 <!DOCTYPE html>
 
 <html>
@@ -57,6 +62,31 @@
 	<title>Web Services</title>
 
 	<script type="text/javascript">
+
+	function createCookie(name,value,days) {
+	    if (days) {
+	        var date = new Date();
+	        date.setTime(date.getTime()+(days*24*60*60*1000));
+	        var expires = "; expires="+date.toGMTString();
+	    }
+	    else var expires = "";
+	    document.cookie = name+"="+value+expires+"; path=/";
+	}
+	
+	function readCookie(name) {
+	    var nameEQ = name + "=";
+	    var ca = document.cookie.split(';');
+	    for(var i=0;i < ca.length;i++) {
+	        var c = ca[i];
+	        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+	        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	    }
+	    return null;
+	}
+	
+	function eraseCookie(name) {
+	    createCookie(name,"",-1);
+	}
 
 	function friendly_http_response_code(code)
 	{
@@ -179,6 +209,14 @@
 	    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	    http.setRequestHeader("Content-length", params.length);
 	    http.setRequestHeader("Connection", "close");
+<?php
+		if (isset($_SESSION["jwt"]))
+		{
+?>
+		http.setRequestHeader("Jwt","<?php echo $_SESSION["jwt"]; ?>");
+<?php
+		}
+?>
 	
 	    http.onreadystatechange = function() {
 	        if (http.readyState == 4)
@@ -200,16 +238,29 @@
 	
 	    http.send(params);
 	}
+
 	</script>
 </head>
 
 <body>
 	<h1>Web Services</h1>
+<?php
+		if (isset($_SESSION["id_profile"]))
+		{
+?>
+	<?php echo $_SESSION["id_profile"]; ?>
+<?php
+		}
+?>
 	<h2>Request</h2>
 	<p>Select the web service to call
 		<select name="wsselect" id="wsselect" onchange="onSelectChange()">
-			<option value="../webservices/ws_connect.php" selected>ws_connect</option> 
 			<option value="../webservices/ws_forgotten_password.php">ws_forgotten_password</option>
+			<option value="../webservices/ws_connect.php" selected>ws_connect</option> 
+			<option value="../webservices/ws_add_member.php">ws_add_member</option>
+			<option value="../webservices/ws_delete_member.php">ws_delete_member</option>
+			<option value="../webservices/ws_update_member.php">ws_update_member</option>
+			<option value="../webservices/ws_disconnect.php">ws_disconnect</option>
 		</select>
 	</p>
 	<div id="WSPostParams">
