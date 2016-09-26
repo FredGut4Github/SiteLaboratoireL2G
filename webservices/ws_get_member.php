@@ -17,7 +17,7 @@ try {
 	// VALIDATE THE MEMBER'S RIGHT
 	ValidateMemberRights($payload->profile, $GROUPS_ALLOWDED);	
 	// VALIDATE THE WEB SERVICE PARAMETERS
-	WSUpdateMember::ValidateParameters();
+	WSGetMember::ValidateParameters();
 }
 catch (Exception $e)
 {	// 		Token not valid for many reason
@@ -38,67 +38,93 @@ if (MemberExists($dbprotect,$id_member))
 	if (isset($_POST['phone_number']))
 	{
 		$opt_param_names = "phone_number";
-		$opt_param_values = "'".$_POST['phone_number']."'";
-		$set_request_part = $set_request_part.$opt_param_names."=".$opt_param_values;
+		$set_request_part = $set_request_part.$opt_param_names;
 	}
 	if (isset($_POST['email']))
 	{
 		if ($set_request_part !== "") $set_request_part = $set_request_part.", ";
 		$opt_param_names = "email";
-		$opt_param_values = "'".$_POST['email']."'";
-		$set_request_part = $set_request_part.$opt_param_names."=".$opt_param_values;
+		$set_request_part = $set_request_part.$opt_param_names;
 	}
 	if (isset($_POST['title']))
 	{
 		if ($set_request_part !== "") $set_request_part = $set_request_part.", ";
 		$opt_param_names = "title";
-		$opt_param_values = "'".$_POST['title']."'";
-		$set_request_part = $set_request_part.$opt_param_names."=".$opt_param_values;
+		$set_request_part = $set_request_part.$opt_param_names;
 	}
 	if (isset($_POST['first_name']))
 	{
 		if ($set_request_part !== "") $set_request_part = $set_request_part.", ";
 		$opt_param_names = "first_name";
-		$opt_param_values = "'".$_POST['first_name']."'";
-		$set_request_part = $set_request_part.$opt_param_names."=".$opt_param_values;
+		$set_request_part = $set_request_part.$opt_param_names;
 	}
 	if (isset($_POST['last_name']))
 	{
 		if ($set_request_part !== "") $set_request_part = $set_request_part.", ";
 		$opt_param_names = "last_name";
-		$opt_param_values = "'".$_POST['last_name']."'";
-		$set_request_part = $set_request_part.$opt_param_names."=".$opt_param_values;
+		$set_request_part = $set_request_part.$opt_param_names;
 	}
 	if (isset($_POST['id_profile']))
 	{
 		if ($set_request_part !== "") $set_request_part = $set_request_part.", ";
 		$opt_param_names = "id_profile";
-		$opt_param_values = "'".$_POST['id_profile']."'";
-		$set_request_part = $set_request_part.$opt_param_names."=".$opt_param_values;
+		$set_request_part = $set_request_part.$opt_param_names;
 	}
-	
+
 	if ($set_request_part !== "")
 	{
-		if (!($result = $dbprotect->query("UPDATE MEMBER SET $set_request_part WHERE id_member ='$id_member'")))
+		if ( (!($result = $dbprotect->query("SELECT $set_request_part FROM MEMBER WHERE id_member ='$id_member'"))) || ($result->nul_rows != 1) )
 		{	//Impossible de modifier l'entrée, ce qui ne devrait pas arriver
 			http_response_code(500); // Internal Server Error
-			LogFatalMessage($dbprotect,$MSG_MODULE_DATABASE,"Update MEMBER error","UPDATE SQL Query failed :\nUPDATE MEMBER SET ".$set_request_part." WHERE id_member = ".$id_member);
+			LogFatalMessage($dbprotect,$MSG_MODULE_DATABASE,"SELECT MEMBER error","SELECT SQL Query failed :\nSELECT ".$set_request_part." FROM MEMBER WHERE id_member = ".$id_member);
 		}
 		// Request succeded
-		// Returne code 204 instead of 200 because we have no content to return
-		http_response_code(204); // No Content
-      	LogInfoMessage($dbprotect,$MSG_MODULE_MEMBER,"Member updated","The member (".$id_member.") has been updated");
+		// Build the JSON response
+		$r = $result->fetch_assoc();
+		
+		// Create a new JWT and send it
+		$jwt = RenewJSONWebToken($r['id_member'],$r['id_profile'],0,3600);
+		$unencodedArray = [];
+		if (isset($_POST['phone_number']))
+		{
+			$unencodedArray['phone_number'] = $r['phone_number'];
+		}
+		if (isset($_POST['email']))
+		{
+			$unencodedArray['email'] = $r['email'];
+		}
+		if (isset($_POST['title']))
+		{
+			$unencodedArray['title'] = $r['title'];
+		}
+		if (isset($_POST['first_name']))
+		{
+			$unencodedArray['first_name'] = $r['first_name'];
+		}
+		if (isset($_POST['last_name']))
+		{
+			$unencodedArray['last_name'] = $r['last_name'];
+		}
+		if (isset($_POST['id_profile']))
+		{
+			$unencodedArray['id_profile'] = $r['id_profile'];
+		}
+		echo json_encode($unencodedArray);
+
+		// Returne code 200 OK
+		http_response_code(200); // OK
+      	LogInfoMessage($dbprotect,$MSG_MODULE_MEMBER,"Get personal info updated","The member (".$id_member.") has been retreived.");
 	}
 	else
-	{	// Nothing to update
-		http_response_code(304); // Not Modified
-		LogInfoMessage($dbprotect,$MSG_MODULE_MEMBER,"Update member request","Nothing to update for member ".$id_member);
+	{	// Nothing to get
+		http_response_code(204); // Not Content
+		LogInfoMessage($dbprotect,$MSG_MODULE_MEMBER,"Get personal info request","Nothing to get for member ".$id_member);
 	}
 }
 else 
 {	// Member doesn't exist
 	http_response_code(404); // Not Found
-	LogWarningMessage($dbprotect,$MSG_MODULE_MEMBER,"Update member request","No member found with id_member ".$id_member);
+	LogCriticalMessage($dbprotect,$MSG_MODULE_MEMBER,"Get personal info request","No member found with id_member ".$id_member);
 }
 
 ?>

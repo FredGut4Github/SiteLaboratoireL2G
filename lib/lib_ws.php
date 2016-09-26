@@ -80,12 +80,19 @@ function ValidateJSONWebToken()
 
 function ValidateMemberRights($profile,$rightsneeded)
 {
-	if (!in_array($profile, $rightsneeded))
-	{
+	if (empty($rightsneeded))
+	{	// No rights defined so anybody is allowed
+		return true;
+	} 
+	elseif (!in_array($profile, $rightsneeded))
+	{	// Rights defined but the user pofile is not in
 		http_response_code(403);	// Forbidden.
 		throw new Excpetion();
 	}
-	return true;
+	else
+	{
+		return true;
+	}
 }
 
 
@@ -178,6 +185,24 @@ class WSAddMember extends WSCommonService
 	
 }
 
+class WSGetMember extends WSCommonService
+{
+	
+	public static function ValidateParameters()
+	{
+		try {
+			parent::ValidateParameter($_POST,'id_member');
+			return true;
+		}
+		catch(Exception $e)
+		{	// A mandatory parameter is missing
+			http_response_code(501);	// Not Implemented
+			throw $e;
+		}
+	}
+	
+}
+
 class WSDeleteMember extends WSCommonService
 {
 	
@@ -203,6 +228,40 @@ class WSUpdateMember extends WSCommonService
 	{
 		try {
 			parent::ValidateParameter($_POST,'id_member');
+			return true;
+		}
+		catch(Exception $e)
+		{	// A mandatory parameter is missing
+			http_response_code(501);	// Not Implemented
+			throw $e;
+		}
+	}
+	
+}
+
+class WSUpdatePersonalInfo extends WSCommonService
+{
+	
+	public static function ValidateParameters()
+	{
+		try {
+			return true;
+		}
+		catch(Exception $e)
+		{	// A mandatory parameter is missing
+			http_response_code(501);	// Not Implemented
+			throw $e;
+		}
+	}
+	
+}
+
+class WSGetPersonalInfo extends WSCommonService
+{
+	
+	public static function ValidateParameters()
+	{
+		try {
 			return true;
 		}
 		catch(Exception $e)
