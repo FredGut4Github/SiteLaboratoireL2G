@@ -79,15 +79,17 @@ if (MemberExists($dbprotect,$id_member))
 	
 	if ($set_request_part !== "")
 	{
-		if (!($result = $dbprotect->query("UPDATE MEMBER SET $set_request_part WHERE id_member ='$id_member'")))
+		if ($result = $dbprotect->query("UPDATE MEMBER SET $set_request_part WHERE id_member ='$id_member'"))
+		{	// Request succeded
+			// Returne code 204 instead of 200 because we have no content to return
+			http_response_code(204); // No Content
+	      	LogInfoMessage($dbprotect,$MSG_MODULE_MEMBER,"Member updated","The member (".$id_member.") has been updated");
+		}
+		else
 		{	//Impossible de modifier l'entrée, ce qui ne devrait pas arriver
 			http_response_code(500); // Internal Server Error
 			LogFatalMessage($dbprotect,$MSG_MODULE_DATABASE,"Update MEMBER error","UPDATE SQL Query failed :\nUPDATE MEMBER SET ".$set_request_part." WHERE id_member = ".$id_member);
 		}
-		// Request succeded
-		// Returne code 204 instead of 200 because we have no content to return
-		http_response_code(204); // No Content
-      	LogInfoMessage($dbprotect,$MSG_MODULE_MEMBER,"Member updated","The member (".$id_member.") has been updated");
 	}
 	else
 	{	// Nothing to update

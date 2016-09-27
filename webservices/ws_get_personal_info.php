@@ -28,7 +28,7 @@ catch (Exception $e)
 
 // HERE WE GO... EVERYTHING IS DOING WELL ;-)
 
-// Mandatory parameters
+// Retreive id in the JSON Web Token
 $id_member = $payload->id;
 if (MemberExists($dbprotect,$id_member))
 {
@@ -67,17 +67,16 @@ if (MemberExists($dbprotect,$id_member))
 
 	if ($set_request_part !== "")
 	{
-		if ( (!($result = $dbprotect->query("SELECT $set_request_part FROM MEMBER WHERE id_member ='$id_member'"))) || ($result->nul_rows != 1) )
+		if ( (!($result = $dbprotect->query("SELECT $set_request_part FROM MEMBER WHERE id_member ='$id_member'"))) || ($result->num_rows != 1) )
 		{	//Impossible de modifier l'entrée, ce qui ne devrait pas arriver
 			http_response_code(500); // Internal Server Error
 			LogFatalMessage($dbprotect,$MSG_MODULE_DATABASE,"SELECT MEMBER error","SELECT SQL Query failed :\nSELECT ".$set_request_part." FROM MEMBER WHERE id_member = ".$id_member);
+			exit;
 		}
 		// Request succeded
 		// Build the JSON response
 		$r = $result->fetch_assoc();
 		
-		// Create a new JWT and send it
-		$jwt = RenewJSONWebToken($r['id_member'],$r['id_profile'],0,3600);
 		$unencodedArray = [];
 		if (isset($_POST['phone_number']))
 		{

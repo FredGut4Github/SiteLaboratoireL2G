@@ -273,4 +273,21 @@ class WSGetPersonalInfo extends WSCommonService
 	
 }
 
+class WSListOfMembers extends WSCommonService
+{
+	
+	public static function ValidateParameters()
+	{
+		try {
+			return true;
+		}
+		catch(Exception $e)
+		{	// A mandatory parameter is missing
+			http_response_code(501);	// Not Implemented
+			throw $e;
+		}
+	}
+	
+}
+
 ?>
