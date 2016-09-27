@@ -257,9 +257,13 @@ session_start();
 		<select name="wsselect" id="wsselect" onchange="onSelectChange()">
 			<option value="../webservices/ws_forgotten_password.php">ws_forgotten_password</option>
 			<option value="../webservices/ws_connect.php" selected>ws_connect</option> 
+			<option value="../webservices/ws_list_of_members.php">ws_list_of_members</option>
 			<option value="../webservices/ws_add_member.php">ws_add_member</option>
-			<option value="../webservices/ws_delete_member.php">ws_delete_member</option>
+			<option value="../webservices/ws_get_personal_info.php">ws_get_personal_info</option>
+			<option value="../webservices/ws_update_personal_info.php">ws_update_personal_info</option>
+			<option value="../webservices/ws_get_member.php">ws_get_member</option>
 			<option value="../webservices/ws_update_member.php">ws_update_member</option>
+			<option value="../webservices/ws_delete_member.php">ws_delete_member</option>
 			<option value="../webservices/ws_disconnect.php">ws_disconnect</option>
 		</select>
 	</p>
