@@ -4,7 +4,7 @@
 <?php require_once('../lib/lib_ws.php');?>
 <?php
 
-$GROUPS_ALLOWDED = ['Directors','Dentists','Employees','Dentists','Patient','DeliveryMen','Suppliers','Partners'];
+$GROUPS_ALLOWDED = [];
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");

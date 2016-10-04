@@ -5,7 +5,7 @@
 <?php require_once('../lib/lib_ws.php');?>
 <?php
 
-$GROUPS_ALLOWDED = ['Directors','Dentists','Employees','Dentists','Patient','DeliveryMen','Suppliers','Partners'];
+$GROUPS_ALLOWDED = [];
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -33,16 +33,17 @@ if ($check_user =  $dbprotect->query("SELECT id_member, title, first_name, last_
 		$member_found = $check_user->fetch_assoc();
 		$friendly_name = trim($member_found['title']." ".$member_found['first_name']." ".$member_found['last_name']);
 		
-		if (!SendMailToResetPassword($dbprotect, $email, $friendly_name))
+		if (SendMailToResetPassword($dbprotect, $email, $friendly_name))
+		{	// Request succeded
+			// Returne code 204 instead of 200 because we have no content to return
+			http_response_code(204); // No Content
+	      	LogInfoMessage($dbprotect,$MSG_MODULE_MEMBER,"Password request","An email has been sent to ".$email);
+		}
+		else
 		{	// The mail was not sent... technical problem 
 			http_response_code(500); // Internal Server Error
 			LogWarningMessage($dbprotect,$MSG_MODULE_MEMBER,"Password request","Cannot send an email to ".$email);
 		}
-		
-		// Request succeded
-		// Returne code 204 instead of 200 because we have no content to return
-		http_response_code(204); // No Content
-      	LogInfoMessage($dbprotect,$MSG_MODULE_MEMBER,"Password request","An email has been sent to ".$email);
 	}
 	else
 	{	// No member found

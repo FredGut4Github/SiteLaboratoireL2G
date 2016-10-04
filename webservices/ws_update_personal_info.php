@@ -6,7 +6,7 @@
 <?php require_once('../lib/lib_message_log.php');?>
 <?php
 
-$GROUPS_ALLOWDED = ['Director'];
+$GROUPS_ALLOWDED = [];
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -17,7 +17,7 @@ try {
 	// VALIDATE THE MEMBER'S RIGHT
 	ValidateMemberRights($payload->profile, $GROUPS_ALLOWDED);	
 	// VALIDATE THE WEB SERVICE PARAMETERS
-	WSUpdateMember::ValidateParameters();
+	WSUpdatePersonalInfo::ValidateParameters();
 }
 catch (Exception $e)
 {	// 		Token not valid for many reason
@@ -28,8 +28,8 @@ catch (Exception $e)
 
 // HERE WE GO... EVERYTHING IS DOING WELL ;-)
 
-// Mandatory parameters
-$id_member = $_POST['id_member'];
+// Retreive id in the JSON Web Token
+$id_member = $payload->id;
 if (MemberExists($dbprotect,$id_member))
 {
 	$set_request_part = "";
@@ -69,21 +69,14 @@ if (MemberExists($dbprotect,$id_member))
 		$opt_param_values = "'".$_POST['last_name']."'";
 		$set_request_part = $set_request_part.$opt_param_names."=".$opt_param_values;
 	}
-	if (isset($_POST['id_profile']))
-	{
-		if ($set_request_part !== "") $set_request_part = $set_request_part.", ";
-		$opt_param_names = "id_profile";
-		$opt_param_values = "'".$_POST['id_profile']."'";
-		$set_request_part = $set_request_part.$opt_param_names."=".$opt_param_values;
-	}
-	
+
 	if ($set_request_part !== "")
 	{
 		if ($result = $dbprotect->query("UPDATE MEMBER SET $set_request_part WHERE id_member ='$id_member'"))
 		{	// Request succeded
 			// Returne code 204 instead of 200 because we have no content to return
 			http_response_code(204); // No Content
-	      	LogInfoMessage($dbprotect,$MSG_MODULE_MEMBER,"Member updated","The member (".$id_member.") has been updated");
+	      	LogInfoMessage($dbprotect,$MSG_MODULE_MEMBER,"Personal info updated","The member (".$id_member.") has been updated");
 		}
 		else
 		{	//Impossible de modifier l'entrée, ce qui ne devrait pas arriver
@@ -94,13 +87,13 @@ if (MemberExists($dbprotect,$id_member))
 	else
 	{	// Nothing to update
 		http_response_code(304); // Not Modified
-		LogInfoMessage($dbprotect,$MSG_MODULE_MEMBER,"Update member request","Nothing to update for member ".$id_member);
+		LogInfoMessage($dbprotect,$MSG_MODULE_MEMBER,"Update personal info request","Nothing to update for member ".$id_member);
 	}
 }
 else 
 {	// Member doesn't exist
 	http_response_code(404); // Not Found
-	LogWarningMessage($dbprotect,$MSG_MODULE_MEMBER,"Update member request","No member found with id_member ".$id_member);
+	LogCriticalMessage($dbprotect,$MSG_MODULE_MEMBER,"Update personal info request","No member found with id_member ".$id_member);
 }
 
 ?>
