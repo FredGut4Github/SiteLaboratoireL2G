@@ -229,6 +229,8 @@ function navigation(){
 	}
 }
 
+var div_content;
+
 /*	PAGE-TRANSATION
 ----------------------------*/
 function pageTransation(){
@@ -312,8 +314,23 @@ function pageTransation(){
 				else{
 					$("#ajax-page .pg-wrp").addClass("fadeOut");
 					setTimeout(function(){
+
+						// si on est en mode mobile alors on récupère le contenu du div #mobile-box
+						if($("html").hasClass("mobile-v"))
+						{	// On est en mode mobile
+							div_content = $("#ajax-page #mobile-box > *");
+						}
+
 						ajaxpage.html('');
 						pageload(pageUrl, ajaxpage);
+
+						// si on est en mode mobile alors il faut initialiser le div #mobile-box avec le contenu qu'on a sauvegardé
+						if($("html").hasClass("mobile-v"))
+						{	// On est en mode mobile
+							$("#ajax-page #mobile-box").html(div_content);
+							//$("#reguar-box").html(div_content);
+						}
+
 					}, 800);
 				}
 			}
@@ -333,6 +350,12 @@ function pageload(pageUrl, ajaxpage) {
 			$("#ajax-page").removeClass("port-full");
 		}
 		ajaxpage.html(data);
+
+		if($("html").hasClass("mobile-v"))
+		{	// On est en mode mobile
+			$("#ajax-page #mobile-box").html(div_content);
+		}
+
 		ajaxpage.addClass("active-page");
 		owlCarouselWidget();
 		// Resting clock function

@@ -15,6 +15,7 @@
 function mediaQuery(){
 	function mobileView(){
 		if($("html").hasClass("mobile-v")){
+			
 			if($("#home-page #mobile-clock *").length == 0){
 				$("#regular-clock #countdown_dashboard").prependTo( $("#home-page #mobile-clock") );
 			}
@@ -22,8 +23,8 @@ function mediaQuery(){
 				return true;
 			}
 
-			if($("#home-page #mobile-box *").length == 0){
-				$("#reguar-box > *").prependTo( $("#home-page #mobile-box") );
+			if($("#ajax-page #mobile-box *").length == 0){
+				$("#reguar-box > *").prependTo( $("#ajax-page #mobile-box") );
 			}
 			else{
 				return true;
@@ -31,7 +32,7 @@ function mediaQuery(){
 		}
 		else{
 			$("#home-page #mobile-clock #countdown_dashboard").prependTo( $("#regular-clock") );
-			$("#home-page #mobile-box > *").prependTo( $("#reguar-box") );
+			$("#ajax-page #mobile-box > *").prependTo( $("#reguar-box") );
 		}
 	}
 	enquire.register("only screen and (min-width: 1200px)", {
