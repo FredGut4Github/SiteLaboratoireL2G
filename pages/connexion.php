@@ -82,6 +82,12 @@ else
 
     </form>
 
+    <!-- [ MOBILE-BOX ] -->
+    <div id="mobile-box" style="opacity: 0;">
+      
+    </div>
+    <!-- [ MOBILE-BOX END ] -->
+
   </div>
 </div>
 <!-- [ CONNEXION PAGE END ]-->
