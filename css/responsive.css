@@ -379,6 +379,7 @@
 
 	.social-icon{ margin-top: 40px; }
 
+	.contact-container{ position: unset; top: unset; transform: unset; }
 	.copyrights{ bottom: -40px; }
 	
 	/*	HOME PAGE
@@ -528,6 +529,9 @@
 	.container{ width: 550px; }
 	.title-wrapper{ margin-bottom: 40px; }
 
+	.contact-container{ position: unset; top: unset; transform: unset; }
+	.copyrights{ bottom: -40px; }
+
 	/*	SIDE COVER
 	------------------------------*/
 	.logo{ top: 30px; left: 30px; }
@@ -573,6 +577,9 @@
 	.title-wrapper{ margin-bottom: 40px; }
 	.title-wrapper p{ width: 100%; font-size: 18px; }
 	.nc-menu-trigger{ top: 10px; right: 10px; }
+
+	.contact-container{ position: unset; top: unset; transform: unset; }
+	.copyrights{ bottom: -40px; }
 
 	/*	SIDE COVER
 	------------------------------*/
@@ -654,6 +661,7 @@
 	.social-icon{ margin-top: 40px; }
 	.social-icon .icon{ width: 30px; height: 30px; }
 
+	.contact-container{ position: unset; top: unset; transform: unset; }
 	.copyrights{ 
 		position: inherit;
 		bottom: 0;
@@ -706,10 +714,14 @@
 	.port-detail .tools .tool i{ font-size: 24px; }
 
 } 
+
 @media only screen and (min-width: 320px) and (max-width: 767px){
 
 	/*	GENERAL
 	------------------------------*/
+	#home-page{ opacity: 0; top: unset; transform: unset; }
+	#ajax-page{ top: unset; transform: unset; }
+
 	.nc-content-section .nc-cell.vhm > .vhm-item{
 		position: absolute;
 		top: 0;
@@ -739,6 +751,7 @@
 	.layout-4 .dash .inner-dash{ border-color: rgba(255,255,255,0.2); }
 	.layout-4 .dash_title{ color: #fff; }
 
+	.contact-container{ position: unset; top: unset; transform: unset; }
 	.copyrights{ 
 		position: inherit;
 		bottom: 0; 
@@ -772,6 +785,7 @@
 	.contact-form .input-area{ margin-bottom: 15px; }
 	.contact-box-wrp{ margin-bottom: 30px; }
 	.contact-box{ margin-bottom: 10px; }
+	.contact-box .text p, .contact-box .text a { font-size: 14px; }
 
 	/*  PORTFOLIO BOX
 	---------------------------------*/
