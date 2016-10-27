@@ -1,5 +1,6 @@
 <?php require_once('../lib/connexion.php'); ?>
 <?php require_once('../lib/JWT.php'); ?>
+<?php require_once('../lib/lib_ws.php'); ?>
 <?php
 
 session_start(); // Début de session
@@ -73,39 +74,6 @@ session_start(); // Début de session
 	<h2>WEB Session</h2>
 <?php
 
-function RenewJSONWebToken($id,$profile)
-{
-	$tokenId    = base64_encode(mcrypt_create_iv(32));
-	$issuedAt   = time();
-	$notBefore  = $issuedAt + 0;  //Adding 0 seconds
-	$expire     = $notBefore + 3600; // Adding 3600 seconds
-	$serverName = 'http://localhost/php-json/'; /// set your domain name 
-	 
-	/*
-	 * Create the token as an array
-	 */
-	$data = [
-	         'iat'  => $issuedAt,         // Issued at: time when the token was generated
-	         'jti'  => $tokenId,          // Json Token Id: an unique identifier for the token
-	         'iss'  => $serverName,       // Issuer
-	         'nbf'  => $notBefore,        // Not before
-	         'exp'  => $expire,           // Expire
-	         'data' => [                  // Data related to the logged user you can set your required data
-	         			'id'		=> $id,			// id from the users table
-	         			'profile'	=> $profile,	//
-	                   ]
-	        ];
-	$secretKey = base64_decode("SECRETKEY");
-	/// Here we will transform this array into JWT:
-	$jwt = JWT::encode(
-	                    $data,     //Data to be encoded in the JWT
-						$secretKey // The signing key
-	                  ); 
-
-	// Déclaration des variables de session
-	$_SESSION['jwt'] = $jwt;
-}
-
 
 
 
@@ -118,7 +86,9 @@ else if (isset($_POST['onActionRenewToken']))
 {
 	if (isset($_SESSION['jwt']))
 	{
-		RenewJSONWebToken($_SESSION['id_member'],$_SESSION['id_profile']);
+		RenewJSONWebToken($_SESSION['id_member'],$_SESSION['id_profile'],0,3600);
+		// Déclaration des variables de session
+		$_SESSION['jwt'] = $jwt;
 	}
 }
 else if (isset($_POST['onActionConnect']))
@@ -133,7 +103,9 @@ else if (isset($_POST['onActionConnect']))
 		{
 			$r = $result->fetch_assoc(); // On récupère la ligne en cours
 			 
-			RenewJSONWebToken($r['id_member'],$r['id_profile']);
+			RenewJSONWebToken($r['id_member'],$r['id_profile'],0,3600);
+			// Déclaration des variables de session
+			$_SESSION['jwt'] = $jwt;
 
 			// Déclaration des variables de session
 			$_SESSION['id_member'] 	= $r['id_member']; 

@@ -25,20 +25,12 @@ catch (Exception $e)
 }
 
 // HERE WE GO... EVERYTHING IS DOING WELL ;-)
-$id_member = $_POST['id_member'];
+$id_member = $payload->id;
 
-If ($id_member != $payload->id)
-{
-	// The member to disconnect is not the one who call the ws
-	http_response_code(409); // Conflict
-	LogWarningMessage($dbprotect,$MSG_MODULE_MEMBER,"Disconnect member request","Unable to disconnect member ".$id_member.". Member ".$payload->id." connected.");
-}
-else 
-{
 	// Request succeded
 	// Returne code 204 instead of 200 because we have no content to return
 	http_response_code(204); // No Content
 	LogInfoMessage($dbprotect,$MSG_MODULE_MEMBER,"Member disconnected","Member ".$id_member." disconnected.");
-}
+
 
 ?>
