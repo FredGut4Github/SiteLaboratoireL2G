@@ -2,3 +2,14 @@ PASSAGE EN PROD :
 
 
 index.html >> modifier adresse img en www.
+lib/globals.php >> mofifier $HTTP_URL, $HTTPS_URL et $ADMINISTRATION_EMAILS
+
+
+
+
+INFOS DIVERSES A DOCUMENTER :
+
+Les icones utilisés --> http://fontawesome.io/icon/      
+(ex: http://fontawesome.io/icon/diamond/ --> <i class="fa fa-diamond" aria-hidden="true"></i>
+
+

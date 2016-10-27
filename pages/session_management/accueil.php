@@ -23,12 +23,16 @@ header("Location:$HTTP_URL"); // redirection en cas d'echec
 					<div id="home-page" class="page-wrapper vhm-item active-home anim s01">
 						<div class="container">
 
-							<!-- [ MOBILE-CLOCK ] -->
-							<div id="mobile-clock" class="layout-4">
-								
-							</div>
-							<!-- [ MOBILE-CLOCK END ] -->
+			            </div>
 
+			          </div>
+			          <!-- [ HOME-PAGE END ] -->
+
+			          <!-- [ AJAX-PAGE ] -->
+			          <div id="ajax-page" class="page-wrapper vhm-item layout4">
+
+			            <div class="container">
+			            
 							<div id="contact" class="anim s01 pg-wrp">
 							  <div class="container">
 				

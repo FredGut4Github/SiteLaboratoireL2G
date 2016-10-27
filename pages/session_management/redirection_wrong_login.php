@@ -12,7 +12,16 @@ session_start();
 					<!-- [ HOME-PAGE ] -->
 					<div id="home-page" class="page-wrapper vhm-item active-home anim s01">
 						<div class="container">
+		            </div>
 
+		          </div>
+		          <!-- [ HOME-PAGE END ] -->
+
+		          <!-- [ AJAX-PAGE ] -->
+		          <div id="ajax-page" class="page-wrapper vhm-item layout4">
+
+		            <div class="container">
+		            
 							<!-- [ MOBILE-CLOCK ] -->
 							<div id="mobile-clock" class="layout-4">
 								
@@ -27,7 +36,7 @@ session_start();
 							      <h1 class="h1 title">Identifiant ou mot de passe erroné</h1>
 							      <span class="line"></span>
 							      <p>
-							        Veuillez réessaye ... Redirection en cours ...<br>
+							        Veuillez réessayer ... Redirection en cours ...<br>
 								  </p>
 							    </section>
 
