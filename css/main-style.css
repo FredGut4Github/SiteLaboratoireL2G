@@ -136,7 +136,7 @@ color:#fff;
 .gt14 > [class*="col"]  { padding-right: 7px;  padding-left: 7px; }
 .gt16 > [class*="col"]  { padding-right: 8px;  padding-left: 8px; }
 .gt18 > [class*="col"]  { padding-right: 9px;  padding-left: 9px; }
-.gt20 > [class*="col"]  { padding-right: 10px; padding-left: 10px; }
+.gt20 > [class*="col"]  { padding-right: 10px; padding-left: 10px; padding-bottom: 10px; padding-top: 10px;}
 .gt22 > [class*="col"]  { padding-right: 11px; padding-left: 11px; }
 .gt24 > [class*="col"]  { padding-right: 12px; padding-left: 12px; }
 .gt26 > [class*="col"]  { padding-right: 13px; padding-left: 13px; }
@@ -258,7 +258,8 @@ color:#fff;
 	animation-fill-mode: both;
 }
 #home-page.active-home{ opacity: 1;}
-#home-page{ opacity: 0; }
+#home-page{ opacity: 0; top: 20%; transform: translate(-50%); }
+#ajax-page{ top: 20%; transform: translate(-50%); }
 
 /*	FADE-IN-UP
 ------------------------------*/
@@ -370,7 +371,7 @@ img{ width: 100%; max-width: 100%; }
 #main{ box-shadow: none; }
 .container{ width: 1170px; }
 html.ie .nc-content-section{ overflow: hidden; }		/*A MODIFIER auto POUR SCROLL hidden DE BASE*/
-
+.contact-container{ position: fixed; width: 100%; top: 50%; transform: translate(0%,-50%); }
 
 /*	FONTS
 ------------------------------*/
@@ -471,7 +472,20 @@ h1, h2, h3, h4, h5, h6,
 }
 .title-wrapper.sub .line{ margin-left: 0; margin-top: 10px; }
 
+/*  LIST
+------------------------------*/
+ol, ul{
+	list-style: circle;
+}
 
+ul li{
+	font-size: 16px;
+	line-height: 1.5;
+	color: rgba(255,255,255,0.65);
+	letter-spacing: 1px;
+	font-weight: 400;
+	text-align: left;
+}
 
 /*	LOADER
 ------------------------------*/
@@ -965,7 +979,7 @@ h1, h2, h3, h4, h5, h6,
 	color: rgba(255,255,255,0.6);
 	text-align: center;
 	position: fixed;
-	bottom: -100px;
+	bottom: 30px;
 	left: 0;
 	width: 100%;
 	letter-spacing: 2px;
@@ -1171,6 +1185,7 @@ h1, h2, h3, h4, h5, h6,
     color: rgba(255,255,255,0.65);
     letter-spacing: 1px;
     font-weight : 400;
+	text-align: justify;
 }
 
 
@@ -1310,7 +1325,7 @@ html.ff .contact-box .text{ height: 50px; }
 .contact-box .text a{
 	color: #fff;
 	font-weight: 100;
-	font-size: 18px;
+	font-size: 16px;
 	letter-spacing: 1px;
 }
 .contact-box:hover{ border-color: #fff; }
@@ -1830,7 +1845,7 @@ html.ff .contact-box .text{ height: 50px; }
 	bottom: 20px;
 	left: 20px;
 	right: 20px;
-	background-color: rgba(255,255,255,0.8);
+	background-color: rgba(255,255,255,0.3);
 	opacity: 0;
 }
 .port2-box:hover .port-detail{ opacity: 1; }

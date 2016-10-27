@@ -46,7 +46,7 @@
 		<!-- [ MENU-ICON END ] -->
 
 		<!-- [ PAGE-SECTION ] -->
-		<main id="main" class="background" data-image="images/intro-bg.jpg">
+		<main id="main" class="background" data-image="images/intro-bg-blur.jpg">
 
 			<!-- [ BACKGROUND-OVERLAY ] -->
 			<div class="overlay"></div>
@@ -56,7 +56,7 @@
 
 				<!-- [ LEFT ] -->
 				<div id="nc-left-cell" class="nc-cell vhm layout-4">
-					<div class="inner-container vhm-item">
+					<div class="inner-container vhm-item" style="top: 0px; height: 100%; transform: translate(-50%,0%); padding-top: 30px; padding-bottom: 30px;">
 						
 						<!-- [ LOGO ] -->
 						<div class="logo ac anim fadeInUp s01 delay-0-5s">
@@ -72,26 +72,27 @@
 						<!-- [ REGULAR-BOX ] -->
 						<div id="reguar-box">
 
-							<!-- [ SUBSCRIBE ] -->
-							<div class="subscribe ac anim fadeInUp s01 delay-0-8s">
-								<form id="notifyMe" class="subscription-form clear form-field-wrapper" method="POST" action="subscribe.php">
-									<input type="text" class="form-control" name="email" placeholder="Email">
-									<button type="submit" id="submit" class="icon vhm"><i class="fa fa-envelope-o vhm-item"></i></button>
-								</form>
-								<p>Recevez notre actualité<br>en saisissant votre email ci-dessus.</p>
+							<div class="contact-container">
+								<!-- [ SUBSCRIBE ] -->
+								<div class="subscribe ac anim fadeInUp s01 delay-0-8s">
+									<form id="notifyMe" class="subscription-form clear form-field-wrapper" method="POST" action="subscribe.php">
+										<input type="text" class="form-control" name="email" placeholder="Email">
+										<button type="submit" id="submit" class="icon vhm"><i class="fa fa-envelope-o vhm-item"></i></button>
+									</form>
+									<p>Recevez notre actualité<br>en saisissant votre email ci-dessus.</p>
+								</div>
+
+								<!-- [ SUBSCRIBE END ] -->
+
+								<!-- [ ADRESS ] -->
+								<div class="social-icon ac anim fadeInUp s01 delay-0-9s">
+									<p>
+										<a style="color:white;" href="https://goo.gl/maps/pkCrwVhwDzv" target="_blank">4 rue Nestor Cornier,<br>38100 Grenoble<br></a><br>
+										<a style="color:white;" href="callto:+33476469267">04 76 46 92 67</a>	
+									</p>
+								</div>
+								<!-- [ ADRESS END ] -->
 							</div>
-
-							<!-- [ SUBSCRIBE END ] -->
-
-							<!-- [ ADRESS ] -->
-							<div class="social-icon ac anim fadeInUp s01 delay-0-9s">
-								<p><a style="color:white;" href="https://goo.gl/maps/pkCrwVhwDzv" target="_blank">4 rue Nestor Cornier,<br>
-								38100 Grenoble<br></a><br>
-
-								<a style="color:white;" href="callto:+33476469267">04 76 46 92 67</a>	
-								</p>
-							</div>
-							<!-- [ ADRESS END ] -->
 
 							<!-- [ COPYRIGHT ] -->
 							<div class="copyrights ac anim fadeInUp s01 delay-1s">
@@ -102,7 +103,6 @@
 						</div>
 						<!-- [ REGULAR-BOX END ] -->
 						
-
 					</div>
 				</div>
 				<!-- [ LEFT END ] -->
@@ -111,15 +111,20 @@
 				<div id="nc-right-cell" class="nc-cell vhm">
 					
 					<!-- [ HOME-PAGE ] -->
-					<div id="home-page" class="page-wrapper vhm-item active-home anim s01">
+					<div id="home-page" class="page-wrapper vhm-item anim s01">
+
 						<div class="container">
 
-							<!-- [ MOBILE-CLOCK ] -->
-							<div id="mobile-clock" class="layout-4">
-								
-							</div>
-							<!-- [ MOBILE-CLOCK END ] -->
+						</div>
 
+					</div>
+					<!-- [ HOME-PAGE END ] -->
+
+					<!-- [ AJAX-PAGE ] -->
+					<div id="ajax-page" class="page-wrapper vhm-item layout4">
+
+						<div class="container">
+						
 							<!-- [ TAGLINE ] -->
 							<div class="tagline">
 
@@ -145,24 +150,129 @@
 							
 									</div>
 								</div>
-								<p class="ac anim fadeInUp s01 delay-0-7s">Notre site sera disponible très bientôt. Entrez votre adresse mail à gauche pour 
-								être notifié des nouveautés. Accédez au menu en haut à droite pour en découvrir davantage !</p>
+		
 							</div>
 							<!-- [ TAGLINE END ] -->
 
+							<div class="row gt30" style="margin-bottom: 40px;">
+								<div class="col-md-12 anim fadeInUp s01 delay-0-6s">
+									<div class="info-box-1">
+										<img style="max-width: 100%; max-height: 100%; padding: 10px; background-color: rgba(255,255,255,0.2);" src="images/Bandeau.jpg"/>
+									</div>
+								</div>
+							</div>
+
+							<div class="row gt30" style="margin-bottom: 40px;">
+								<div class="col-md-6 anim fadeInUp s01 delay-0-6s">
+									<div class="info-box-1">
+										<div class="icon vhm">
+											<span class="box"></span>
+											<i class="fa fa-check-square-o vhm-item"></i>
+										</div>
+										<div class="text">
+											<h4 class="h-text">Un accompagnement étroit</h4>
+											<p>
+											Un accompagnement qui a pour but d'optimiser la réalisation des prothèses. Plus la relation entre vous, chirurgien-dentiste, et nous, prothésistes, est dynamique et sereine plus les résultats seront positifs. Les patients ressortiront de votre cabinet avec le sourire en ayant une prothèse fonctionnelle, esthétiquement réussie, lui redonnant un réel confort de vie :)
+											</p>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-6 anim fadeInUp s01 delay-0-6s">
+									<div class="info-box-1">
+										<div class="icon vhm">
+											<span class="box"></span>
+											<i class="fa fa-check-square-o vhm-item"></i>
+										</div>
+										<div class="text">
+											<h4 class="h-text">Matériaux de qualité et une technique reconnue implacable</h4>
+											<p>
+											L'utilisation du système IVOCAP&reg; vous donne l'assurance du bon maintien des prothèses complètes maxillaires.
+											</p>
+											<br/>
+											<img style="max-width:25%; max-height:25%; float: right; background-color: rgba(255,255,255,0.8); padding: 10px;" src="images/Ivocap.png"/>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="row gt30" style="margin-bottom: 40px;">
+								<div class="col-md-6 anim fadeInUp s01 delay-0-6s">
+									<div class="info-box-1">
+										<div class="icon vhm">
+											<span class="box"></span>
+											<i class="fa fa-check-square-o vhm-item"></i>
+										</div>
+										<div class="text">
+											<h4 class="h-text">Un service de qualité et de précision</h4>
+											<p>
+											Un savoir faire maitrisé qui vous aidera dans la réalisation de prothèses sur des cas patients des plus délicats.
+											</p>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-6 anim fadeInUp s01 delay-0-6s">
+									<div class="info-box-1">
+										<div class="icon vhm">
+											<span class="box"></span>
+											<i class="fa fa-check-square-o vhm-item"></i>
+										</div>
+										<div class="text">
+											<h4 class="h-text">Un service de livraison sérieux</h4>
+											<p>
+											Une tranquillité d'esprit assurée dû à son professionnalisme et sa ponctualité.
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+		
+							<span class="line anim fadeInUp s01 delay-0-6s" style="width: 80%; height: 2px; background-color: rgba(255,255,255,0.2); margin: auto; display: block; margin-bottom: 40px;"></span>
+
+							<div class="row gt30" style="margin-bottom: 40px;">
+								<div class="col-md-12 anim fadeInUp s01 delay-0-6s">
+									<div class="info-box-1">
+										<div class="icon vhm" style="height: unset;">
+											<img style="max-width:100%; max-height:100%; background-color: rgba(255,255,255,0.8);" src="images/BPS.png"/>
+										</div>
+										<div class="text">
+											<h4 class="h-text">BPS pour les Prothésistes Dentaires</h4>
+											<p>
+											BPS désigne la méthode de traitement de l'édentassion totale mise au point par Ivoclar Vivadent, en collaboration avec les professionnels de l'Art Dentaire. Ce système est adapté aux exigences des seniors actifs dans un marché en pleine expansion.</o><p>
+											BPS repose sur l'utilisation matériaux fiables et performants, une aide marketing destinée à mettre en valeur les travaux réalisés, et le soutien d'une équipe de consultants spécialisés.</p><p>
+											BPS offre tout ce dont vous avez besoin pour réaliser des prothèses de qualité qui répondent aux exigences des prothésistes dentaires, des chirurgiens dentistes et des patients.
+											</p>
+										</div>
+									</div>
+								</div>		
+							</div>
+
+							<span class="line anim fadeInUp s01 delay-0-6s" style="width: 80%; height: 2px; background-color: rgba(255,255,255,0.2); margin: auto; display: block; margin-bottom: 40px;"></span>
+
+							<div class="row gt30" style="margin-bottom: 40px;">
+								<div class="col-md-4 anim fadeInUp s01 delay-0-6s" style="white-space: nowrap; text-align: center; height: 100px;">
+									<span style="display: inline-block; height: 100%; vertical-align: middle;"></span>
+									<img style="width:unset; max-height:100%; vertical-align: middle; padding: 10px;" src="images/Ivoclar.png"/>
+								</div>		
+								<div class="col-md-4 anim fadeInUp s01 delay-0-6s" style="white-space: nowrap; text-align: center; height: 100px;">
+									<span style="display: inline-block; height: 100%; vertical-align: middle;"></span>
+									<img style="width:unset; max-height:100%; vertical-align: middle; padding: 10px;" src="images/logomaitreartisan.png"/>
+								</div>		
+								<div class="col-md-4 anim fadeInUp s01 delay-0-6s" style="white-space: nowrap; text-align: center; height: 100px;">
+									<span style="display: inline-block; height: 100%; vertical-align: middle;"></span>
+									<img style="width:unset; max-height:100%; vertical-align: middle; padding: 10px;" src="images/LABEL_MADEINFRANCE.png"/>
+								</div>		
+							</div>
+						
 							<!-- [ MOBILE-BOX ] -->
 							<div id="mobile-box">
 								
 							</div>
-
 							<!-- [ MOBILE-BOX END ] -->
-						</div>
-					</div>
-					<!-- [ HOME-PAGE END ] -->
 
-					<!-- [ AJAX-PAGE ] -->
-					<div id="ajax-page" class="page-wrapper vhm-item layout4">
-						
+						</div>
+
 					</div>
 					<!-- [ AJAX-PAGE END ] -->
 
@@ -185,7 +295,7 @@
 			</header>
 
 			<ul id="navigation" class="nc-menu">
-				<li class="nc-active" data-menu="index">
+<!--			<li class="nc-active" data-menu="index">
 					<a class="link-box vhm nav-link" data-page="home.html" href="#home">
 						<span class="vhm-item inner-wrp">
 							<span class="icon"><i class="fa fa-home"></i></span>
@@ -193,7 +303,16 @@
 						</span>
 					</a>
 				</li>
-
+-->
+				<li data-menu="indexbis">
+					<a class="odd link-box vhm nav-link" data-page="pages/index.html" href="#index">
+						<span class="vhm-item inner-wrp">
+							<span class="icon"><i class="fa fa-home"></i></span>
+							<span class="text">Accueil</span>
+						</span>
+					</a>
+				</li>
+				
 				<li data-menu="about-1">
 					<a class="odd link-box vhm nav-link" data-page="pages/about.html" href="#about">
 						<span class="vhm-item inner-wrp">
