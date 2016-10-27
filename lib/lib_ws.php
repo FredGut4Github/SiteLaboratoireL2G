@@ -39,7 +39,7 @@ function ValidateJSONWebToken()
 	if(isset($allheaders['Jwt']))
 	{
 		$token = $allheaders['Jwt'];
-		$secretKey = base64_decode("SECRETKEY");
+		$secretKey = base64_decode("Welcome2WebServices4L2G");
 	
 		try
 		{
@@ -151,7 +151,6 @@ class WSDisconnect extends WSCommonService
 	public static function ValidateParameters()
 	{
 		try {
-			parent::ValidateParameter($_POST,'id_member');
 			return true;
 		}
 		catch(Exception $e)
