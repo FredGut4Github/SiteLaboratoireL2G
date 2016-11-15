@@ -9,6 +9,7 @@
 	/*	GENERAL
 	------------------------------*/
 	.container{ width: 950px; }
+	.tagline h1 {font-size: 60px; }
 
 	/*	LAYOUT-4
 	------------------------------*/
@@ -228,7 +229,7 @@
 	
 	/*	HOME PAGE
 	------------------------------*/
-	.tagline h1{ font-size: 56px; }
+	.tagline h1{ font-size: 47px; }
 	.tagline p{ font-size: 24px; width: 100%; }
 
 	/*	ABOUT PAGE STYLE-1
@@ -385,7 +386,7 @@
 	/*	HOME PAGE
 	------------------------------*/
 	.tagline{ width: 100%; }
-	.tagline h1{ font-size: 54px; margin-bottom: 20px; }
+	.tagline h1{ font-size: 47px; margin-bottom: 20px; }
 	.tagline p{ font-size: 22px; width: 100%; }
 
 	/*	ABOUT PAGE
@@ -588,7 +589,7 @@
 
 	/*	HOME PAGE
 	------------------------------*/
-	.tagline h1{ font-size: 40px; margin-bottom: 15px; }
+	.tagline h1{ font-size: 34px; margin-bottom: 15px; }
 	.tagline p{ width: 100%; font-size: 18px; }
 	.subscribe{ width: auto; }
 
@@ -673,7 +674,7 @@
 	------------------------------*/
 	.tagline{ margin-bottom: 30px; }
 	.tagline h1{ 
-		font-size: 28px; 
+		font-size: 21px; 
 		margin-bottom: 20px; 
 		letter-spacing: 1px;
 	}
