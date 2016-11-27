@@ -28,8 +28,8 @@ $MESSAGE_LOG_MODULE[$MSG_MODULE_MEMBER] 	= TRUE;		/// Set to FALSE to stop to st
 
 $ADMINISTRATION_EMAILS = "fred.gut@gmail.com, yann.btg@gmail.com";
 
-$HTTP_URL = "http://dev.laboratoire-gutierrez.com/" ;
+$HTTP_URL = "http://www.laboratoire-gutierrez.com/" ;
 
-$HTTPS_URL = "https://dev.laboratoire-gutierrez.com/" ;
+$HTTPS_URL = "https://www.laboratoire-gutierrez.com/" ;
 
 ?>

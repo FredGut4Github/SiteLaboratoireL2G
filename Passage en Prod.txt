@@ -2,7 +2,7 @@ PASSAGE EN PROD :
 
 
 index.html >> modifier adresse img en www.
-lib/globals.php >> mofifier $HTTP_URL, $HTTPS_URL et $ADMINISTRATION_EMAILS
+lib/globals.php >> modifier $HTTP_URL, $HTTPS_URL et $ADMINISTRATION_EMAILS
 
 
 
